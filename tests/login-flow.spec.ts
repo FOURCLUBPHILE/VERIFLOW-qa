@@ -37,13 +37,15 @@ test('Candidate Full Flow Submission', async ({ page }) => {
   console.log(`Dialog message: ${dialog.message()}`);
   await dialog.accept();
 
-  // FIX: Wait a moment for the alert to close and the page to settle
-  await page.waitForTimeout(1000);
 
-  // After accepting the alert, manually click the "Back to Login" link
-  await page.locator('text=Back to Login').click();
+    // Wait for the alert to disappear and the link to be fully visible
+  await page.waitForSelector('text=Back to Login', { state: 'visible', timeout: 5000 });
   
-  // Now wait for the Login page to appear
-  await page.waitForURL('**/index.html');
+  // Force click the link
+  await page.locator('text=Back to Login').click({ force: true });
+  
+  // Wait for the Login page to appear
+  await page.waitForURL('**/index.html', { timeout: 5000 });
+ 
 
 });
