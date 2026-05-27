@@ -1,0 +1,62 @@
+we have two types of users 
+1 people hiring for jobs (HR admins) and second is people looking for jobs (candidates)
+
+index.html - login page hai it ask who are you (candidate or hr),also ask for email and password
+
+
+candidate-form.html (The Application Room)
+If the user logs in as a Candidate, they go here.
+
+
+
+script.js (The Security Guard & Traffic Cop):
+It checks if the email is real (Validation).
+It checks if the password is long enough.
+It decides where to send the user: "If you are Candidate, go to Room A. If you are HR, go to Room B."
+
+
+application form and amdi n dashboard ke bich mein link hoga ek shared notebook called local storage 
+
+
+
+Candidate Page writes: "New Candidate: Sarah, Email: sarah@test.com" on the Whiteboard.
+Admin Page walks over, looks at the Whiteboard, reads the data, and displays it on the table.
+
+Normally: User → Database → Admin.
+Right now: User → Browser Storage (LocalStorage) → Admin.
+
+---------------------------------------------------
+
+windows.location.href ki wjh se application form se page apne aap login page yaani index.html mein shift ho jata hai
+
+candidates {"id":1779685489678,"name":"tarun Singh gautam",...}
+
+candidates: This is the Key (the label on the folder). This is exactly what we named it in the code.
+{...}: This is the Value (the papers inside the folder). This is the data you typed in the form!
+
+
+so in local storage we see data which we have filled in form so now in admin dashboard we should see the data we have filled and how??😬😬😬😬😬😬😬😬😬😬😬
+
+
+read the data from local storage 
+Create a new row in the table using the real data (Tarun Singh Gautam).
+Display it.
+
+
+
+jab appplicattion form mein data submit kara toh woh local storage mein gaya 
+
+
+PHASE 3 — JSON Server APIs😭😭😭😭❤️❤️❤️❤️
+
+You (The Browser): You sit at the table. You cannot go into the kitchen.
+The Kitchen (The Server/Database): Where the food (Data) is kept.
+The Waiter (The API): You give your order to the waiter. The waiter goes to the kitchen, gets the food, and brings it back to you.
+
+
+
+
+SERVER/API - good for connecting many users 
+also real time sync possible ,also permanent untill deleted from db
+
+

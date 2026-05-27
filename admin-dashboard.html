@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Dashboard specific styles */
+        body {
+            display: block; /* Override centering for full page */
+            background-color: #f8fafc;
+        }
+        .dashboard-header {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dashboard-content {
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-top: 1rem;
+        }
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background-color: #f1f5f9;
+            font-weight: 600;
+        }
+        .action-btn {
+            padding: 0.4rem 0.8rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+            font-size: 0.8rem;
+        }
+        .btn-approve { background-color: var(--success-color); color: white; }
+        .btn-reject { background-color: var(--error-color); color: white; }
+        
+        /* Status Dropdown */
+        select.status-select {
+            padding: 4px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="dashboard-header">
+        <h2>HR Dashboard</h2>
+        <a href="index.html" style="color: white; text-decoration: none;">Logout</a>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="dashboard-content">
+        <h3>Pending Applications</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Fake Data Row 1 -->
+                <tr id="candidate-row-1">
+                    <td>Sarah Connor</td>
+                    <td>Frontend Dev</td>
+                    <td>
+                        <select class="status-select" id="status-1">
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="action-btn btn-approve" id="approve-btn-1">Approve</button>
+                        <button class="action-btn btn-reject" id="reject-btn-1">Reject</button>
+                    </td>
+                </tr>
+
+                <!-- Fake Data Row 2 -->
+                <tr id="candidate-row-2">
+                    <td>John Wick</td>
+                    <td>Security Engineer</td>
+                    <td>
+                        <select class="status-select" id="status-2">
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="action-btn btn-approve" id="approve-btn-2">Approve</button>
+                        <button class="action-btn btn-reject" id="reject-btn-2">Reject</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <script>
+            
+        // --- 1. RUN THIS WHEN THE PAGE LOADS ---
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("Admin Dashboard Loaded. Looking for candidates...");
+            
+            loadCandidatesFromStorage();
+        });
+
+        // --- 2. FUNCTION TO LOAD DATA ---
+        function loadCandidatesFromStorage() {
+            // A. Get the table body where we will put the rows
+            const tableBody = document.querySelector('tbody');
+            
+            // B. READ FROM LOCALSTORAGE
+            // We look for the key 'candidates'
+            const storedData = localStorage.getItem('candidates');
+
+            if (storedData) {
+                console.log("Found data:", storedData);
+
+                // C. PARSE THE DATA
+                // LocalStorage saves text. We need to turn it back into an Object.
+                const candidate = JSON.parse(storedData);
+
+                // D. CLEAR FAKE DATA
+                // Remove the old fake rows (Sarah Connor, John Wick) so the table is empty
+                tableBody.innerHTML = '';
+
+                // E. CREATE THE NEW ROW
+                const row = document.createElement('tr');
+                row.setAttribute('id', `candidate-row-${candidate.id}`); // Unique ID for the row
+
+                // F. FILL THE ROW WITH DATA
+                row.innerHTML = `
+                    <td>${candidate.name}</td>
+                    <td>${candidate.role || 'Candidate'}</td>
+                    <td>
+                        <select class="status-select" id="status-${candidate.id}">
+                            <option value="Pending" ${candidate.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                            <option value="Approved" ${candidate.status === 'Approved' ? 'selected' : ''}>Approved</option>
+                            <option value="Rejected" ${candidate.status === 'Rejected' ? 'selected' : ''}>Rejected</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="action-btn btn-approve" id="approve-btn-${candidate.id}" onclick="updateStatus(${candidate.id}, 'Approved')">Approve</button>
+                        <button class="action-btn btn-reject" id="reject-btn-${candidate.id}" onclick="updateStatus(${candidate.id}, 'Rejected')">Reject</button>
+                    </td>
+                `;
+
+                // G. ADD THE ROW TO THE TABLE
+                tableBody.appendChild(row);
+
+            } else {
+                console.log("No candidates found in LocalStorage.");
+                // Optional: Keep the fake data if no real data exists
+                // Or display a message: "No applications yet."
+            }
+        }
+
+          // --- 3. FUNCTION TO HANDLE BUTTON CLICKS (Approve/Reject) ---
+        function updateStatus(id, newStatus) {
+            console.log(`Updating candidate ${id} to ${newStatus}`);
+
+            // A. READ THE CURRENT DATA
+            // We must get the fresh data from storage first
+            const storedData = localStorage.getItem('candidates');
+            
+            if (storedData) {
+                let candidate = JSON.parse(storedData);
+
+                // B. MODIFY THE DATA
+                // Update the status property in our object
+                candidate.status = newStatus;
+
+                // C. SAVE THE DATA BACK
+                // Write the updated object back to LocalStorage
+                localStorage.setItem('candidates', JSON.stringify(candidate));
+
+                // D. UPDATE THE UI (The Dropdown)
+                const selectBox = document.getElementById(`status-${id}`);
+                if(selectBox) {
+                    selectBox.value = newStatus;
+                }
+
+                alert(`Status updated to ${newStatus} and saved!`);
+            }
+        }
+    
+    </script>
+
+</body>
+</html>

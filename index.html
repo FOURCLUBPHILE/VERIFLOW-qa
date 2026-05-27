@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise HR Portal - Login</title>
+    <link rel="stylesheet" href="style.css">
+   
+</head>
+<body>
+
+    <!-- Main Login Container -->
+    <main id="login-container">
+        
+        <!-- Header Section -->
+        <header id="app-header">
+            <h1 id="app-title">Enterprise Portal</h1>
+            <p id="app-subtitle">Secure Access Management</p>
+        </header>
+
+        <!-- Role Selection -->
+        <nav id="role-switcher">
+            <!-- Button for Candidate Role -->
+            <button id="role-candidate-btn" type="button">
+                Candidate
+            </button>
+            <!-- Button for HR Role -->
+            <button id="role-hr-btn" type="button">
+                HR Admin
+            </button>
+        </nav>
+
+        <!-- Login Form -->
+        <!-- The novalidate attribute allows us to use custom JS validation later -->
+        <form id="login-form" novalidate>
+            
+            <!-- Hidden Input: Stores the selected role for automation/backend -->
+            <input type="hidden" id="selected-role" name="role" value="candidate">
+
+            <!-- Email Field Group -->
+            <div class="form-group">
+                <label for="email-input">Email Address</label>
+                <!-- autocomplete helps users and testers -->
+                <input 
+                    type="email" 
+                    id="email-input" 
+                    name="email" 
+                    placeholder="name@company.com" 
+                    autocomplete="email">
+                <!-- Placeholder for error messages -->
+                <small id="email-error" class="error-message"></small>
+            </div>
+
+            <!-- Password Field Group -->
+            <div class="form-group">
+                <label for="password-input">Password</label>
+                <input 
+                    type="password" 
+                    id="password-input" 
+                    name="password" 
+                    placeholder="Enter your password" 
+                    autocomplete="current-password">
+                <!-- Placeholder for error messages -->
+                <small id="password-error" class="error-message"></small>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="login-button">
+                Sign In
+            </button>
+        </form>
+
+        <!-- Footer -->
+        <footer id="form-footer">
+            <a href="#" id="forgot-password-link">Forgot Password?</a>
+        </footer>
+
+    </main>
+
+    <!-- Container for notifications (Toasts) -->
+    <div id="toast-container"></div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

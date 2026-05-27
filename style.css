@@ -1,0 +1,210 @@
+/* --- CSS Variables for Enterprise Theme --- */
+:root {
+    --primary-color: #0f172a;      /* Dark Navy/Black */
+    --accent-color: #2563eb;       /* Bright Blue */
+    --accent-hover: #1d4ed8;       /* Darker Blue for hover */
+    --bg-color: #f1f5f9;           /* Light Grey Background */
+    --card-bg: #ffffff;            /* White Card */
+    --text-main: #1e293b;          /* Main Text */
+    --text-muted: #64748b;         /* Subtitle/Placeholder text */
+    --border-color: #e2e8f0;       /* Light borders */
+    --error-color: #ef4444;        /* Red for errors */
+    --success-color: #10b981;      /* Green for success */
+    --radius: 8px;                 /* Rounded corners */
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* --- Global Reset & Base Styles --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* --- Main Container --- */
+#login-container {
+    width: 100%;
+    max-width: 420px;
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    padding: 2rem;
+    margin: 1rem;
+}
+
+/* --- Header --- */
+#app-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#app-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+#app-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* --- Role Switcher (Tabs) --- */
+#role-switcher {
+    display: flex;
+    background: var(--bg-color);
+    padding: 4px;
+    border-radius: var(--radius);
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+}
+
+#role-switcher button {
+    flex: 1;
+    padding: 0.75rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+#role-switcher button.active {
+    background-color: var(--card-bg);
+    color: var(--accent-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+#role-switcher button:hover:not(.active) {
+    background-color: #e2e8f0;
+}
+
+/* --- Form Styles --- */
+#login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-main);
+}
+
+input[type="email"],
+input[type="password"] {
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Error States */
+input.error {
+    border-color: var(--error-color);
+}
+
+.error-message {
+    font-size: 0.75rem;
+    color: var(--error-color);
+    min-height: 1rem; /* Keeps layout stable */
+    display: none;   /* Hidden by default */
+}
+
+/* --- Button --- */
+#login-button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.85rem;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    transition: background-color 0.2s;
+}
+
+#login-button:hover {
+    background-color: var(--accent-hover);
+}
+
+#login-button:disabled {
+    background-color: var(--text-muted);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* --- Footer --- */
+#form-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+#form-footer a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+#form-footer a:hover {
+    text-decoration: underline;
+}
+
+/* --- Toast Notification --- */
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.toast {
+    background: var(--primary-color);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    animation: slideIn 0.3s ease-out;
+    max-width: 300px;
+}
+
+.toast.error { background: var(--error-color); }
+.toast.success { background: var(--success-color); }
+
+@keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}

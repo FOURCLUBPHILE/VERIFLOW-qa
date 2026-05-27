@@ -1,0 +1,26 @@
+{
+  "candidates": [
+    {
+      "name": "tarun Singh gautam",
+      "email": "tarungautamsingh@gmail.com",
+      "phone": "924742379",
+      "idNumber": "",
+      "company": "harman",
+      "role": "Candidate",
+      "status": "Pending",
+      "appliedDate": "5/26/2026",
+      "id": "PwcA0McP6uo"
+    },
+    {
+      "name": "API Test User",
+      "email": "api@example.com",
+      "phone": "0000000000",
+      "idNumber": "API-123",
+      "company": "API Corp",
+      "role": "Candidate",
+      "status": "Pending",
+      "id": "G4C6VXUVdSA"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
