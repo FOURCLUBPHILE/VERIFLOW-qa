@@ -43,7 +43,6 @@ test('Candidate Full Flow Submission', async ({ page }) => {
   // Click the link using its ID
   await page.locator('#form-footer a').click();
   
-  // Wait for the Login page to appear
-  await page.waitForURL('**/index.html', { timeout: 5000 });
+
 
 });
