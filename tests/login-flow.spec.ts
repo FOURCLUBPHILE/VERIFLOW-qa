@@ -30,16 +30,17 @@ test('Candidate Full Flow Submission', async ({ page }) => {
   // Fill the Company (Using ID)
   await page.locator('#candidate-company').fill('Test Automation Inc');
 
-  // Handle the Alert (Popup) automatically
-  // We accept the dialog, which confirms the submit action happened
+    // Handle the Alert (Popup) automatically
   const dialogPromise = page.waitForEvent('dialog');
-  await page.locator('#submit-application-btn').click(); // <--- CLICKED ONLY ONCE
+  await page.locator('#submit-application-btn').click();
   const dialog = await dialogPromise;
   console.log(`Dialog message: ${dialog.message()}`);
   await dialog.accept();
 
+  // FIX: Wait a moment for the alert to close and the page to settle
+  await page.waitForTimeout(1000);
+
   // After accepting the alert, manually click the "Back to Login" link
-  // This ensures we definitely leave the page
   await page.locator('text=Back to Login').click();
   
   // Now wait for the Login page to appear
