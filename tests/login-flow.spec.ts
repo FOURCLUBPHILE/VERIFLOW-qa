@@ -30,22 +30,20 @@ test('Candidate Full Flow Submission', async ({ page }) => {
   // Fill the Company (Using ID)
   await page.locator('#candidate-company').fill('Test Automation Inc');
 
-    // Handle the Alert (Popup) automatically
+  // Handle the Alert (Popup) automatically
   const dialogPromise = page.waitForEvent('dialog');
   await page.locator('#submit-application-btn').click();
   const dialog = await dialogPromise;
   console.log(`Dialog message: ${dialog.message()}`);
   await dialog.accept();
 
-
-    // Wait for the alert to disappear and the link to be fully visible
-  await page.waitForSelector('text=Back to Login', { state: 'visible', timeout: 5000 });
+  // FIX: Wait for the link to be visible using its ID
+  await page.waitForSelector('#form-footer a', { state: 'visible', timeout: 5000 });
   
-  // Force click the link
-  await page.locator('text=Back to Login').click({ force: true });
+  // Click the link using its ID
+  await page.locator('#form-footer a').click();
   
   // Wait for the Login page to appear
   await page.waitForURL('**/index.html', { timeout: 5000 });
- 
 
 });
